@@ -44,4 +44,6 @@
 /Debug/
 /Release/
 */Debug/
+**/Debug/
 */Release/
+**/Release/

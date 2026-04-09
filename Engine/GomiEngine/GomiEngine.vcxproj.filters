@@ -9,14 +9,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Inc\Core.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\Common.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Framework\Core\Src\Precompiled.h">
       <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GomiEngine.h">
+      <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
