@@ -136,7 +136,10 @@
     <ClInclude Include="Inc\GomiEngine.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Framework\Core\Src\Precompiled.cpp" />
+    <ClCompile Include="..\..\Framework\Core\Src\Precompiled.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Precompiled.h</PrecompiledHeaderFile>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
