@@ -6,7 +6,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
   <ItemDefinitionGroup>
-  	  </ClCompile>
+  	  <ClCompile>
 		<AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Framework;$(SolutionDir)External;$(SolutionDir)External/Bullet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
   	  </ClCompile>
   </ItemDefinitionGroup>
