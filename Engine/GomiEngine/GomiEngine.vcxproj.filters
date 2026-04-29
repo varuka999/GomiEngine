@@ -18,9 +18,18 @@
     <ClInclude Include="Inc\GomiEngine.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\App.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Framework\Core\Src\Precompiled.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\App.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GomiEngine.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

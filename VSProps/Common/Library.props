@@ -5,10 +5,10 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-        <AdditionalIncludeDirectories>$(ProjectDir)Inc;%(AdditionalIncludeDirectories) 
+        <AdditionalIncludeDirectories>$(ProjectDir)Inc;%(AdditionalIncludeDirectories)
         </AdditionalIncludeDirectories>
-	<PrecompiledHeader>Use</PrecompiledHeader>
-	<PrecompiledHeader>Precompiled.h</PrecompiledHeader>
+        <PrecompiledHeader>Use</PrecompiledHeader>
+        <PrecompiledHeaderFile>Precompiled.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

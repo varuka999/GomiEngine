@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Framework\Core\Core.vcxproj", "{FDDAF33E-AF0A-4CF7-ACEF-13DF925F5CC8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VGP242", "VGP242", "{D0B2141D-418E-4AF1-8A0C-21615F9E3FD1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_HelloWindow", "VGP242\01_HelloWindow\01_HelloWindow.vcxproj", "{D5372104-FFC1-4A27-AC15-A24C96F91573}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -35,6 +39,14 @@ Global
 		{FDDAF33E-AF0A-4CF7-ACEF-13DF925F5CC8}.Release|x64.Build.0 = Release|x64
 		{FDDAF33E-AF0A-4CF7-ACEF-13DF925F5CC8}.Release|x86.ActiveCfg = Release|Win32
 		{FDDAF33E-AF0A-4CF7-ACEF-13DF925F5CC8}.Release|x86.Build.0 = Release|Win32
+		{D5372104-FFC1-4A27-AC15-A24C96F91573}.Debug|x64.ActiveCfg = Debug|x64
+		{D5372104-FFC1-4A27-AC15-A24C96F91573}.Debug|x64.Build.0 = Debug|x64
+		{D5372104-FFC1-4A27-AC15-A24C96F91573}.Debug|x86.ActiveCfg = Debug|Win32
+		{D5372104-FFC1-4A27-AC15-A24C96F91573}.Debug|x86.Build.0 = Debug|Win32
+		{D5372104-FFC1-4A27-AC15-A24C96F91573}.Release|x64.ActiveCfg = Release|x64
+		{D5372104-FFC1-4A27-AC15-A24C96F91573}.Release|x64.Build.0 = Release|x64
+		{D5372104-FFC1-4A27-AC15-A24C96F91573}.Release|x86.ActiveCfg = Release|Win32
+		{D5372104-FFC1-4A27-AC15-A24C96F91573}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{05F5ACE5-3326-46EC-B568-33E99A579B7C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{FDDAF33E-AF0A-4CF7-ACEF-13DF925F5CC8} = {E354D9AC-CC75-4199-9691-B1D91637774F}
+		{D5372104-FFC1-4A27-AC15-A24C96F91573} = {D0B2141D-418E-4AF1-8A0C-21615F9E3FD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F168672-F31E-4440-8DCA-36403ADDC06C}

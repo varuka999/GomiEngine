@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Framework\Core\Src\Precompiled.h" />
+    <ClInclude Include="Inc\App.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\GomiEngine.h" />
   </ItemGroup>
@@ -140,6 +141,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Precompiled.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Src\App.cpp" />
+    <ClCompile Include="Src\GomiEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Core\Core.vcxproj">
+      <Project>{fddaf33e-af0a-4cf7-acef-13df925f5cc8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
