@@ -5,6 +5,7 @@
 using namespace GomiEngine;
 using namespace GomiEngine::Core;
 using namespace GomiEngine::Input;
+using namespace GomiEngine::Graphics;
 
 void App::Run(const AppConfig& config)
 {
@@ -20,6 +21,7 @@ void App::Run(const AppConfig& config)
 
     auto handle = myWindow.GetWindowHandle();
     InputSystem::StaticInitialize(handle);
+    GraphicsSystem::StaticInitialize(handle, config.fullScreen);
 
     // after initializing singletons, initialize current state
     ASSERT(mCurrentState != nullptr, "App: need an app state to run");
@@ -57,10 +59,15 @@ void App::Run(const AppConfig& config)
         mCurrentState->Update(deltaTime);
 
         // render flow
+        GraphicsSystem* gs = GraphicsSystem::Get();
+        gs->BeginRender();
+        mCurrentState->Render();
+        gs->EndRender();
     }
     // terminate active state first
     mCurrentState->Terminate();
     // for all systems built, terminate all singletons
+    GraphicsSystem::StaticTerminate();
     InputSystem::StaticTerminate();
 
     // close the application

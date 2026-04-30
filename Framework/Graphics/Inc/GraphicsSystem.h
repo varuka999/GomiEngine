@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Color.h"
 
 namespace GomiEngine::Graphics
 {
@@ -33,7 +33,7 @@ namespace GomiEngine::Graphics
         void ResetRenderTarget();
         void ResetViewport();
 
-        // void SetClearColor();
+        void SetClearColor(const Color& color);
         void SetVSync(bool vSync);
 
         uint32_t GetBackBufferWidth() const;
@@ -43,7 +43,7 @@ namespace GomiEngine::Graphics
         ID3D11Device* GetDevice();
         ID3D11DeviceContext* GetContext();
     private:
-        static LRESULT CALLBACK GraphicsSystemMessageHandle(HWND win, UINT msg, WPARAM wParam, LPARAM lParam);
+        static LRESULT CALLBACK GraphicsSystemMessageHandler(HWND win, UINT msg, WPARAM wParam, LPARAM lParam);
 
         ID3D11Device* mD3DDevice = nullptr;
         ID3D11DeviceContext* mImmediateContext = nullptr;
@@ -57,7 +57,7 @@ namespace GomiEngine::Graphics
         DXGI_SWAP_CHAIN_DESC mSwapChainDesc{};
         D3D11_VIEWPORT mViewport{};
 
-        // Color mClearColor = Colors::Black;
+        Color mClearColor = Colors::Black;
         UINT mVSync = 1;
     };
 }

@@ -2,6 +2,7 @@
 
 // external libraries
 #include <Core/Inc/Core.h>
+#include <Math/Inc/GomiMath.h>
 
 // directx11
 #include <d3d11_1.h>
@@ -9,7 +10,7 @@
 
 #include <DirectXTK/Inc/CommonStates.h>
 
-#pragma comment(lib, "d3d11_1.lib")
+#pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib")
 
