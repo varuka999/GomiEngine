@@ -7,7 +7,11 @@ int WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
     config.appName = L"Hello Shapes";
 
     GomiEngine::App& myApp = GomiEngine::MainApp();
-    myApp.AddState<ShapeState>("ShapeState");
+    //myApp.AddState<ShapeStates>("ShapeState");
+    //myApp.AddState<QuadStates>("QuadState");
+    myApp.AddState<PentaStates>("PentaState");
+    myApp.AddState<PentaStates2>("PentaState2");
+    myApp.AddState<PentaStates3>("PentaState3");
     myApp.Run(config);
 
     return 0;

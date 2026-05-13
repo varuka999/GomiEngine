@@ -2,49 +2,137 @@
 
 using namespace GomiEngine;
 using namespace GomiEngine::Graphics;
+using namespace GomiEngine::Input;
 
-void ShapeState::Initialize()
+void ShapeStates::Initialize()
 {
-    // create shape
-    CreateShape();
+    CreateShapes();
 
-    auto device = GraphicsSystem::Get()->GetDevice();
+    mMeshBuffer.Initialize(mVertices.data(), sizeof(VertexPC), mVertices.size());
 
-    // create a buffer to store the vertices (mesh buffer)
-    D3D11_BUFFER_DESC bufferDesc = {};
-    bufferDesc.ByteWidth = static_cast<UINT>(mVertices.size()) * sizeof(Vertex);
-    bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-    bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-    bufferDesc.MiscFlags = 0;
-    bufferDesc.StructureByteStride = 0;
-
-    D3D11_SUBRESOURCE_DATA initData = {};
-    initData.pSysMem = mVertices.data();
-    HRESULT hr = device->CreateBuffer(&bufferDesc, &initData, &mVertexBuffer);
-    ASSERT(SUCCEEDED(hr), "MeshBuffer: failed to create mesh buffer");
-    //====================================================================
-
-    // Bind the shader file functions to the appropriate shader objects
-    // vertex shader
-    std::filesystem::path shaderFile = L"../../Assets/Shaders/DoSomething.fx";
-
-
+    std::filesystem::path shaderPath = L"../../Assets/Shaders/DoColor.fx";
+    mVertexShader.Initialize<VertexPC>(shaderPath);
+    mPixelShader.Initialize(shaderPath);
 }
-void ShapeState::Terminate()
+void ShapeStates::Terminate()
 {
-
+    mVertices.clear();
+    mPixelShader.Terminate();
+    mVertexShader.Terminate();
+    mMeshBuffer.Terminate();
 }
-void ShapeState::Update(float deltaTime)
+void ShapeStates::Update(float deltaTime)
 {
-
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("QuadState");
+    }
 }
-void ShapeState::Render()
+void ShapeStates::Render()
 {
-
+    mVertexShader.Bind();
+    mPixelShader.Bind();
+    mMeshBuffer.Render();
 }
-void ShapeState::CreateShape()
+void ShapeStates::CreateShapes()
 {
-    mVertices.push_back({ {-0.5f, -0.5f, 0.0f} });
-    mVertices.push_back({ {0.0f, 0.5f, 0.0f} });
-    mVertices.push_back({ {0.5f, -0.5f, 0.0f} });
+    mVertices.push_back({ {-0.5, -0.5, 0.0,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ {0.0,  0.5, 0.0,}, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ {0.5, -0.5, 0.0,}, {GomiEngine::Graphics::Colors::Blue} });
+}
+void QuadStates::Update(float deltaTime)
+{
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("ShapeState");
+    }
+    else if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("PentaState");
+    }
+}
+void QuadStates::CreateShapes()
+{
+    mVertices.push_back({ {-0.5f, -0.5f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ {-0.5f,  0.5f, 0.0f,}, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 0.5f,  0.5f, 0.0f,}, {GomiEngine::Graphics::Colors::Blue} });
+
+    mVertices.push_back({ {-0.5f, -0.5f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.5f,  0.5f, 0.0f,}, {GomiEngine::Graphics::Colors::Blue} });
+    mVertices.push_back({ { 0.5f, -0.5f, 0.0f,}, {GomiEngine::Graphics::Colors::Green} });
+}
+void PentaStates::Update(float deltaTime)
+{
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("PentaState3");
+    }
+    else if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("PentaState2");
+    }
+}
+void PentaStates::CreateShapes()
+{
+    mVertices.push_back({ {-0.5f,  0.15f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.0f,  0.60f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.5f,  0.15f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+
+    mVertices.push_back({ {-0.5f,  0.15f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.5f,  0.15f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.3f, -0.50f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+
+    mVertices.push_back({ {-0.5f,  0.15f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.3f, -0.50f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ {-0.3f, -0.50f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+}
+void PentaStates2::Update(float deltaTime)
+{
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("PentaState");
+    }
+    else if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("PentaState3");
+    }
+}
+void PentaStates2::CreateShapes()
+{
+    mVertices.push_back({ {-0.65f, -0.35f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ {-0.35f,  0.45f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.25f,  0.55f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+
+    mVertices.push_back({ {-0.65f, -0.35f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.25f,  0.55f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.65f, -0.10f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+
+    mVertices.push_back({ {-0.65f, -0.35f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.65f, -0.10f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.00f, -0.60f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+}
+void PentaStates3::Update(float deltaTime)
+{
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("PentaState2");
+    }
+    else if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("PentaState");
+    }
+}
+void PentaStates3::CreateShapes()
+{
+    mVertices.push_back({ {-0.60f,  0.45f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.60f,  0.45f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.00f, -0.15f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+
+    mVertices.push_back({ { 0.60f,  0.45f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.35f, -0.55f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.00f, -0.15f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+
+    mVertices.push_back({ {-0.60f,  0.45f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.00f, -0.15f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ {-0.35f, -0.55f, 0.0f,}, {GomiEngine::Graphics::Colors::Red} });
 }
