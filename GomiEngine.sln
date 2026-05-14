@@ -33,7 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{D7CD
 	ProjectSection(SolutionItems) = preProject
 		Assets\Shaders\DoColor.fx = Assets\Shaders\DoColor.fx
 		Assets\Shaders\DoSomething.fx = Assets\Shaders\DoSomething.fx
+		Assets\Shaders\DoTransform.fx = Assets\Shaders\DoTransform.fx
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_HelloCube", "VGP242\03_HelloCube\03_HelloCube.vcxproj", "{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +110,14 @@ Global
 		{7E9A7F60-CC02-4944-ABAF-B4C1D6BF8362}.Release|x64.Build.0 = Release|x64
 		{7E9A7F60-CC02-4944-ABAF-B4C1D6BF8362}.Release|x86.ActiveCfg = Release|Win32
 		{7E9A7F60-CC02-4944-ABAF-B4C1D6BF8362}.Release|x86.Build.0 = Release|Win32
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}.Debug|x64.ActiveCfg = Debug|x64
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}.Debug|x64.Build.0 = Debug|x64
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}.Debug|x86.ActiveCfg = Debug|Win32
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}.Debug|x86.Build.0 = Debug|Win32
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}.Release|x64.ActiveCfg = Release|x64
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}.Release|x64.Build.0 = Release|x64
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}.Release|x86.ActiveCfg = Release|Win32
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +132,7 @@ Global
 		{F3865892-5198-43E8-90D4-F681381DD71F} = {E354D9AC-CC75-4199-9691-B1D91637774F}
 		{7E9A7F60-CC02-4944-ABAF-B4C1D6BF8362} = {D0B2141D-418E-4AF1-8A0C-21615F9E3FD1}
 		{D7CD6C85-3730-4007-8E45-72AAB7278E36} = {99DC1C73-7A8E-4A13-B42F-37F2F053A917}
+		{D5C9ADCE-43CA-4706-AE95-E14AB65FF842} = {D0B2141D-418E-4AF1-8A0C-21615F9E3FD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F168672-F31E-4440-8DCA-36403ADDC06C}

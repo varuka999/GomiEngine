@@ -1,6 +1,6 @@
 #pragma once
 
-namespace GomiEnginer::Math::Constants
+namespace GomiEngine::Math::Constants
 {
     constexpr const float Pi = 3.1415926535f;
     constexpr const float HalfPi = Pi * 0.5f;
