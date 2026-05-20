@@ -30,7 +30,7 @@ void ShapeStates::Update(float deltaTime)
 {
     InputSystem* input = InputSystem::Get();
     const float moveSpeed = input->IsKeyDown(KeyCode::LSHIFT) ? 10.0f : 1.0f;
-    const float turnSpeed = 0.1f;
+    const float turnSpeed = 1.5f;
 
     if (input->IsKeyDown(KeyCode::W))
     {
@@ -71,6 +71,7 @@ void ShapeStates::Render()
     // sync buffer information
     mConstantBuffer.BindVS(0);
 
+    // update max buffers
     Math::Matrix4 matWorld = Math::Matrix4::Identity;
     Math::Matrix4 matView = mCamera.GetViewMatrix();
     Math::Matrix4 matProj = mCamera.GetProjectionMatrix();
@@ -83,7 +84,57 @@ void ShapeStates::Render()
 }
 void ShapeStates::CreateShapes()
 {
-    mVertices.push_back({ {-0.5, -0.5, 0.0,}, {GomiEngine::Graphics::Colors::Red} });
-    mVertices.push_back({ {0.0,  0.5, 0.0,}, {GomiEngine::Graphics::Colors::Green} });
-    mVertices.push_back({ {0.5, -0.5, 0.0,}, {GomiEngine::Graphics::Colors::Blue} });
+    // front
+    mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 1.0f, 0.0f, 0.0f }, {GomiEngine::Graphics::Colors::Blue} });
+
+    mVertices.push_back({ { 1.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 1.0f, 0.0f, 0.0f }, {GomiEngine::Graphics::Colors::Blue} });
+    mVertices.push_back({ { 0.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Green} });
+
+    // back
+    mVertices.push_back({ { 0.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 1.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.0f, 1.0f, 1.0f }, {GomiEngine::Graphics::Colors::Blue} });
+
+    mVertices.push_back({ { 1.0f, 1.0f, 1.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 0.0f, 1.0f, 1.0f }, {GomiEngine::Graphics::Colors::Blue} });
+    mVertices.push_back({ { 1.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Red} });
+
+    // top
+    mVertices.push_back({ { 0.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 0.0f, 1.0f, 1.0f }, {GomiEngine::Graphics::Colors::Blue} });
+    mVertices.push_back({ { 1.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Red} });
+
+    mVertices.push_back({ { 1.0f, 1.0f, 1.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 1.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.0f, 1.0f, 1.0f }, {GomiEngine::Graphics::Colors::Blue} });
+
+    // bottom
+    mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 1.0f, 0.0f, 0.0f }, {GomiEngine::Graphics::Colors::Blue} });
+    mVertices.push_back({ { 0.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Green} });
+
+    mVertices.push_back({ { 1.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 1.0f, 0.0f, 0.0f }, {GomiEngine::Graphics::Colors::Blue} });
+
+    // left
+    mVertices.push_back({ { 0.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 0.0f, 0.0f, 0.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 0.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Green} });
+
+    mVertices.push_back({ { 0.0f, 1.0f, 1.0f }, {GomiEngine::Graphics::Colors::Blue} });
+    mVertices.push_back({ { 0.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 0.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Green} });
+
+    // right
+    mVertices.push_back({ { 1.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 1.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 1.0f, 0.0f, 0.0f }, {GomiEngine::Graphics::Colors::Blue} });
+
+    mVertices.push_back({ { 1.0f, 1.0f, 1.0f }, {GomiEngine::Graphics::Colors::Green} });
+    mVertices.push_back({ { 1.0f, 0.0f, 1.0f }, {GomiEngine::Graphics::Colors::Red} });
+    mVertices.push_back({ { 1.0f, 1.0f, 0.0f }, {GomiEngine::Graphics::Colors::Red} });
 }
