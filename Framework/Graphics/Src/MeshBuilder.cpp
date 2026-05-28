@@ -157,6 +157,73 @@ MeshPC MeshBuilder::CreateCubePC(float size)
     return mesh;
 }
 
+MeshPX MeshBuilder::CreateCubePX(float size)
+{
+    MeshPX mesh;
+
+    const float hs = size * 0.5f;
+    const float ot = 1.0f / 3.0f;
+    const float tt = 2.0f / 3.0f;
+
+    // front
+    mesh.vertices.push_back({ { -hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ { -hs,  hs, -hs}, {0.25f, ot} });
+    mesh.vertices.push_back({ {  hs,  hs, -hs}, {0.5f, ot} });
+
+    mesh.vertices.push_back({ { -hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ {  hs,  hs, -hs}, {0.5f, ot} });
+    mesh.vertices.push_back({ {  hs, -hs, -hs}, {0.5f, tt} });
+
+    // right
+    mesh.vertices.push_back({ {  hs, -hs, -hs}, {0.5f, tt} });
+    mesh.vertices.push_back({ {  hs,  hs, -hs}, {0.5f, ot} });
+    mesh.vertices.push_back({ {  hs,  hs,  hs}, {0.75f, ot} });
+
+    mesh.vertices.push_back({ {  hs, -hs, -hs}, {0.5f, tt} });
+    mesh.vertices.push_back({ {  hs,  hs,  hs}, {0.75f, ot} });
+    mesh.vertices.push_back({ {  hs, -hs,  hs}, {0.75f, tt} });
+
+    // back
+    mesh.vertices.push_back({ {  hs, -hs,  hs}, {0.75f, tt} });
+    mesh.vertices.push_back({ {  hs,  hs,  hs}, {0.75f, ot} });
+    mesh.vertices.push_back({ { -hs,  hs,  hs}, {1.0f, ot} });
+
+    mesh.vertices.push_back({ {  hs, -hs,  hs}, {0.75f, tt} });
+    mesh.vertices.push_back({ { -hs,  hs,  hs}, {1.0f, ot} });
+    mesh.vertices.push_back({ { -hs, -hs,  hs}, {1.0f, tt} });
+
+    // left
+    mesh.vertices.push_back({ { -hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ { -hs,  hs,  hs}, {0.0f, ot} });
+    mesh.vertices.push_back({ { -hs,  hs, -hs}, {0.25f, ot} });
+
+    mesh.vertices.push_back({ { -hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ { -hs, -hs,  hs}, {0.0f, tt} });
+    mesh.vertices.push_back({ { -hs,  hs,  hs}, {0.0f, ot} });
+
+    // top
+    mesh.vertices.push_back({ { -hs,  hs, -hs}, {0.25f, ot} });
+    mesh.vertices.push_back({ { -hs,  hs,  hs}, {0.25f,0.0f} });
+    mesh.vertices.push_back({ {  hs,  hs,  hs}, {0.5f,0.0f} });
+
+    mesh.vertices.push_back({ { -hs,  hs, -hs}, {0.25f, ot} });
+    mesh.vertices.push_back({ {  hs,  hs,  hs}, {0.5f,0.0f} });
+    mesh.vertices.push_back({ {  hs,  hs, -hs}, {0.5f, ot} });
+
+    // bottom
+    mesh.vertices.push_back({ { -hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ {  hs, -hs,  hs}, {0.5f,1.0f} });
+    mesh.vertices.push_back({ { -hs, -hs,  hs}, {0.25f,1.0f} });
+
+    mesh.vertices.push_back({ { -hs, -hs, -hs}, {0.25f, tt} });
+    mesh.vertices.push_back({ {  hs, -hs, -hs}, {0.5f, tt} });
+    mesh.vertices.push_back({ {  hs, -hs,  hs}, {0.5f,1.0f} });
+
+    // dont need indices as the vertices make up the shape
+
+    return mesh;
+}
+
 MeshPC MeshBuilder::CreateBoxPC(float width, float height, float depth)
 {
     MeshPC mesh;
@@ -235,6 +302,40 @@ MeshPC MeshBuilder::CreatePlanePC(int numRows, int numColumns, float spacing, bo
     return mesh;
 }
 
+MeshPX MeshBuilder::CreatePlanePX(int numRows, int numColumns, float spacing, bool horizontal)
+{
+    MeshPC mesh;
+    int index = rand() % 100;
+    const float hpw = static_cast<float>(numColumns) * spacing * 0.5f;
+    const float hph = static_cast<float>(numRows) * spacing * 0.5f;
+    const float uInc = 1.0f / static_cast<float>(numColumns);
+    const float vInc = -1.0f / static_cast<float>(numRows);
+
+    float w = -hpw;
+    float h = -hph;
+    float u = 0.0f;
+    float v = 1.0f;
+
+    for (int r = 0; r <= numRows; ++r)
+    {
+        for (int c = 0; c <= numColumns; ++c)
+        {
+            Math::Vector3 pos = (horizontal) ? Math::Vector3{ w, 0.0f, h } : Math::Vector3{ w, h, 0.0f };
+            mesh.vertices.push_back({ pos , {u, v} });
+            w += spacing;
+            u += uInc;
+        }
+        w = -hpw;
+        h += spacing;
+        v += vInc;
+        u = 0.0f;
+    }
+
+    CreatePlaneIndices(mesh.indices, numRows, numColumns);
+
+    return mesh;
+}
+
 MeshPC MeshBuilder::CreateCylinderPC(int slices, int rings)
 {
     MeshPC mesh;
@@ -282,29 +383,23 @@ MeshPC MeshBuilder::CreateCylinderPC2(int slices, int rings)
 
     CreatePlaneIndices(mesh.indices, rings, slices);
 
-    uint32_t bottomTriangleCenterIndice = static_cast<uint32_t>(mesh.vertices.size());
+    uint32_t bottomTriangleCenterIndice = mesh.vertices.size();
     uint32_t bottomStartIndice = 0;
     mesh.vertices.push_back({ { 0.0f, -hh, 0.0f },GetNextColor(index) });
 
-    uint32_t topTriangleCenterIndice = static_cast<uint32_t>(mesh.vertices.size());
-    uint32_t topStartIndice = static_cast<uint32_t>(rings * (slices + 1));
+    uint32_t topTriangleCenterIndice = mesh.vertices.size();
+    uint32_t topStartIndice = rings * (slices + 1);
     mesh.vertices.push_back({ { 0.0f, hh, 0.0f },GetNextColor(index) });
 
     for (int s = 0; s < slices; ++s)
     {
-        uint32_t botTrianglePoint1 = bottomStartIndice + s;
-        uint32_t botTrianglePoint2 = bottomStartIndice + s + 1;
-
-        uint32_t topTrianglePoint1 = topStartIndice + s;
-        uint32_t topTrianglePoint2 = topStartIndice + s + 1;
-
         mesh.indices.push_back(bottomTriangleCenterIndice);
-        mesh.indices.push_back(botTrianglePoint1);
-        mesh.indices.push_back(botTrianglePoint2);
+        mesh.indices.push_back(bottomStartIndice + s);
+        mesh.indices.push_back(bottomStartIndice + s + 1);
 
         mesh.indices.push_back(topTriangleCenterIndice);
-        mesh.indices.push_back(topTrianglePoint2); // opposite order to render the correct direction
-        mesh.indices.push_back(topTrianglePoint1);
+        mesh.indices.push_back(topStartIndice + s + 1); // opposite order to render the correct direction
+        mesh.indices.push_back(topStartIndice + s);
     }
 
     return mesh;

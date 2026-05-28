@@ -13,10 +13,14 @@ void ShapeStates::Initialize()
     CreateShapes();
     mMeshBuffer.Initialize(mMesh);
 
-    std::filesystem::path shaderPath = L"../../Assets/Shaders/DoTransform.fx";
-    mVertexShader.Initialize<VertexPC>(shaderPath);
+    std::filesystem::path shaderPath = L"../../Assets/Shaders/DoTexture.fx";
+    mVertexShader.Initialize<VertexPX>(shaderPath);
     mPixelShader.Initialize(shaderPath);
     mConstantBuffer.Initialize(sizeof(Math::Matrix4));
+
+    mSampler.Initialize(Sampler::Filter::Linear, Sampler::AddressMode::Wrap);
+
+    mTextureId = TextureManager::Get()->LoadTexture("skybox/skybox_texture.jpg");
 }
 void ShapeStates::Move(float deltaTime)
 {
@@ -56,6 +60,8 @@ void ShapeStates::Move(float deltaTime)
 }
 void ShapeStates::Terminate()
 {
+    TextureManager::Get()->ReleaseTexture(mTextureId);
+    mSampler.Terminate();
     mConstantBuffer.Terminate();
     mPixelShader.Terminate();
     mVertexShader.Terminate();
@@ -86,13 +92,16 @@ void ShapeStates::Render()
     Math::Matrix4 wvp = matWorld * matView * matProj;
     wvp = Math::Transpose(wvp);
     mConstantBuffer.Update(&wvp);
+    mSampler.BindPS(0);
+
+    TextureManager::Get()->BindPS(mTextureId, 0);
 
     // render object
     mMeshBuffer.Render();
 }
 void ShapeStates::CreateShapes()
 {
-    mMesh = MeshBuilder::CreateVertexCubePC(1.0f, Colors::Green);
+    //mMesh = MeshBuilder::CreateVertexCubePC(1.0f, Colors::Green);
     //mMesh = MeshBuilder::CreateCubePC(1.0f);
     //mMesh = MeshBuilder::CreateBoxPC(1.5f, 1.0f, 2.0f);
     //mMesh = MeshBuilder::CreatePyramidPC(1.0f);
@@ -103,24 +112,24 @@ void ShapeStates::CreateShapes()
 
 void VertexCubeState::CreateShapes()
 {
-    mMesh = MeshBuilder::CreateVertexCubePC(1.0f, Colors::Green);
+    //mMesh = MeshBuilder::CreateVertexCubePC(1.0f, Colors::Green);
 }
 void VertexCubeState::Update(float deltaTime)
 {
     Move(deltaTime);
 
-    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
-    {
-        MainApp().ChangeState("CubeState");
-    }
-    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
-    {
-        MainApp().ChangeState("SphereState");
-    }
+    //if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    //{
+    //    MainApp().ChangeState("CubeState");
+    //}
+    //if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    //{
+    //    MainApp().ChangeState("SphereState");
+    //}
 }
 void CubeState::CreateShapes()
 {
-    mMesh = MeshBuilder::CreateCubePC(1.0f);
+    //mMesh = MeshBuilder::CreateCubePC(1.0f);
 }
 void CubeState::Update(float deltaTime)
 {
@@ -135,9 +144,27 @@ void CubeState::Update(float deltaTime)
         MainApp().ChangeState("VertexCubeState");
     }
 }
+void CubePXState::CreateShapes()
+{
+    //mMesh = MeshBuilder::CreateCubePX(1.0f);
+    mMesh = MeshBuilder::CreatePlanePX(10, 10, 1.0f);
+}
+void CubePXState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    //if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    //{
+    //    MainApp().ChangeState("BoxState");
+    //}
+    //if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    //{
+    //    MainApp().ChangeState("VertexCubeState");
+    //}
+}
 void BoxState::CreateShapes()
 {
-    mMesh = MeshBuilder::CreateBoxPC(1.5f, 1.0f, 2.0f);
+    //mMesh = MeshBuilder::CreateBoxPC(1.5f, 1.0f, 2.0f);
 }
 void BoxState::Update(float deltaTime)
 {
@@ -154,7 +181,7 @@ void BoxState::Update(float deltaTime)
 }
 void PyramidState::CreateShapes()
 {
-    mMesh = MeshBuilder::CreatePyramidPC(1.0f);
+    //mMesh = MeshBuilder::CreatePyramidPC(1.0f);
 }
 void PyramidState::Update(float deltaTime)
 {
@@ -171,7 +198,7 @@ void PyramidState::Update(float deltaTime)
 }
 void PlaneState::CreateShapes()
 {
-    mMesh = MeshBuilder::CreatePlanePC(5.0f, 5, 1, false);
+    //mMesh = MeshBuilder::CreatePlanePC(5.0f, 5, 1, false);
 }
 void PlaneState::Update(float deltaTime)
 {
@@ -188,7 +215,7 @@ void PlaneState::Update(float deltaTime)
 }
 void CylinderState::CreateShapes()
 {
-    mMesh = MeshBuilder::CreateCylinderPC2(32, 1);
+    //mMesh = MeshBuilder::CreateCylinderPC2(32, 1);
 }
 void CylinderState::Update(float deltaTime)
 {
@@ -205,7 +232,7 @@ void CylinderState::Update(float deltaTime)
 }
 void SphereState::CreateShapes()
 {
-    mMesh = MeshBuilder::CreateSpherePC(16, 16, 1);
+    //mMesh = MeshBuilder::CreateSpherePC(16, 16, 1);
 }
 void SphereState::Update(float deltaTime)
 {

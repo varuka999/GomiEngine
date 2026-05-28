@@ -11,6 +11,7 @@ namespace GomiEngine::Graphics
         // cube
         static MeshPC CreateVertexCubePC(float size, const Color& color);
         static MeshPC CreateCubePC(float size);
+        static MeshPX CreateCubePX(float size);
 
         // rectangle/box
         static MeshPC CreateBoxPC(float width, float height, float depth);
@@ -20,6 +21,7 @@ namespace GomiEngine::Graphics
 
         // plane
         static MeshPC CreatePlanePC(int numRows, int numColumns, float spacing, bool horizontal = true);
+        static MeshPC CreatePlanePX(int numRows, int numColumns, float spacing, bool horizontal = true);
 
         // cylinder
         static MeshPC CreateCylinderPC(int slices, int rings);
