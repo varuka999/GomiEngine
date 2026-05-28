@@ -7,7 +7,14 @@ int WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
     config.appName = L"Hello Mesh builder";
 
     GomiEngine::App& myApp = GomiEngine::MainApp();
-    myApp.AddState<ShapeStates>("ShapeState");
+    //myApp.AddState<ShapeStates>("ShapeState");
+    myApp.AddState<VertexCubeState>("VertexCubeState");
+    myApp.AddState<CubeState>("CubeState");
+    myApp.AddState<BoxState>("BoxState");
+    myApp.AddState<PyramidState>("PyramidState");
+    myApp.AddState<PlaneState>("PlaneState");
+    myApp.AddState<CylinderState>("CylinderState");
+    myApp.AddState<SphereState>("SphereState");
 
     myApp.Run(config);
 

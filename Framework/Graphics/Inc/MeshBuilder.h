@@ -23,6 +23,7 @@ namespace GomiEngine::Graphics
 
         // cylinder
         static MeshPC CreateCylinderPC(int slices, int rings);
+        static MeshPC CreateCylinderPC2(int slices, int rings);
 
         // sphere
         static MeshPC CreateSpherePC(int slices, int rings, int radius);

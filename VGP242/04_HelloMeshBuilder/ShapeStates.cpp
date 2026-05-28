@@ -18,14 +18,7 @@ void ShapeStates::Initialize()
     mPixelShader.Initialize(shaderPath);
     mConstantBuffer.Initialize(sizeof(Math::Matrix4));
 }
-void ShapeStates::Terminate()
-{
-    mConstantBuffer.Terminate();
-    mPixelShader.Terminate();
-    mVertexShader.Terminate();
-    mMeshBuffer.Terminate();
-}
-void ShapeStates::Update(float deltaTime)
+void ShapeStates::Move(float deltaTime)
 {
     InputSystem* input = InputSystem::Get();
     const float moveSpeed = input->IsKeyDown(KeyCode::LSHIFT) ? 10.0f : 1.0f;
@@ -61,6 +54,22 @@ void ShapeStates::Update(float deltaTime)
         mCamera.Pitch(input->GetMouseMoveY() * turnSpeed * deltaTime);
     }
 }
+void ShapeStates::Terminate()
+{
+    mConstantBuffer.Terminate();
+    mPixelShader.Terminate();
+    mVertexShader.Terminate();
+    mMeshBuffer.Terminate();
+}
+void ShapeStates::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("SphereState");
+    }
+}
 void ShapeStates::Render()
 {
     // prepare the GPU
@@ -83,11 +92,131 @@ void ShapeStates::Render()
 }
 void ShapeStates::CreateShapes()
 {
-    //mMesh = MeshBuilder::CreateVertexCubePC(1.0f, Colors::Green);
+    mMesh = MeshBuilder::CreateVertexCubePC(1.0f, Colors::Green);
     //mMesh = MeshBuilder::CreateCubePC(1.0f);
     //mMesh = MeshBuilder::CreateBoxPC(1.5f, 1.0f, 2.0f);
     //mMesh = MeshBuilder::CreatePyramidPC(1.0f);
     //mMesh = MeshBuilder::CreatePlanePC(5.0f, 10, 1, false);
     //mMesh = MeshBuilder::CreateCylinderPC(16, 2);
-    mMesh = MeshBuilder::CreateSpherePC(30, 30, 1);
+    //mMesh = MeshBuilder::CreateSpherePC(30, 30, 1);
+}
+
+void VertexCubeState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreateVertexCubePC(1.0f, Colors::Green);
+}
+void VertexCubeState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("CubeState");
+    }
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("SphereState");
+    }
+}
+void CubeState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreateCubePC(1.0f);
+}
+void CubeState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("BoxState");
+    }
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("VertexCubeState");
+    }
+}
+void BoxState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreateBoxPC(1.5f, 1.0f, 2.0f);
+}
+void BoxState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("PyramidState");
+    }
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("CubeState");
+    }
+}
+void PyramidState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreatePyramidPC(1.0f);
+}
+void PyramidState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("PlaneState");
+    }
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("BoxState");
+    }
+}
+void PlaneState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreatePlanePC(5.0f, 5, 1, false);
+}
+void PlaneState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("CylinderState");
+    }
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("PyramidState");
+    }
+}
+void CylinderState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreateCylinderPC2(8, 3);
+}
+void CylinderState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("SphereState");
+    }
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("PlaneState");
+    }
+}
+void SphereState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreateSpherePC(16, 16, 1);
+}
+void SphereState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    {
+        MainApp().ChangeState("VertexCubeState");
+    }
+    if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    {
+        MainApp().ChangeState("CylinderState");
+    }
 }

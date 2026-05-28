@@ -69,8 +69,6 @@ namespace
             }
         }
     }
-
-
 }
 
 MeshPC MeshBuilder::CreateVertexCubePC(float size, const Color& color)
@@ -79,7 +77,6 @@ MeshPC MeshBuilder::CreateVertexCubePC(float size, const Color& color)
     const float hs = size * 0.5f;
 
     // Front
-
     mesh.vertices.push_back({ { -hs,  hs, -hs } , { color } });
     mesh.vertices.push_back({ {  hs, -hs, -hs } , { color } });
     mesh.vertices.push_back({ { -hs, -hs, -hs } , { color } });
@@ -89,7 +86,6 @@ MeshPC MeshBuilder::CreateVertexCubePC(float size, const Color& color)
     mesh.vertices.push_back({ {  hs, -hs, -hs } , { color } });
 
     // Back
-
     mesh.vertices.push_back({ { -hs, -hs,  hs } , { color } });
     mesh.vertices.push_back({ {  hs, -hs,  hs } , { color } });
     mesh.vertices.push_back({ { -hs,  hs,  hs } , { color } });
@@ -99,7 +95,6 @@ MeshPC MeshBuilder::CreateVertexCubePC(float size, const Color& color)
     mesh.vertices.push_back({ { -hs,  hs,  hs } , { color } });
 
     // Left
-
     mesh.vertices.push_back({ { -hs,  hs,  hs } , { color } });
     mesh.vertices.push_back({ { -hs, -hs, -hs } , { color } });
     mesh.vertices.push_back({ { -hs, -hs,  hs } , { color } });
@@ -109,7 +104,6 @@ MeshPC MeshBuilder::CreateVertexCubePC(float size, const Color& color)
     mesh.vertices.push_back({ { -hs, -hs, -hs } , { color } });
 
     // Right
-
     mesh.vertices.push_back({ {  hs, -hs,  hs } , { color } });
     mesh.vertices.push_back({ {  hs, -hs, -hs } , { color } });
     mesh.vertices.push_back({ {  hs,  hs,  hs } , { color } });
@@ -117,8 +111,8 @@ MeshPC MeshBuilder::CreateVertexCubePC(float size, const Color& color)
     mesh.vertices.push_back({ {  hs, -hs, -hs } , { color } });
     mesh.vertices.push_back({ {  hs,  hs, -hs } , { color } });
     mesh.vertices.push_back({ {  hs,  hs,  hs } , { color } });
-    // Top
 
+    // Top
     mesh.vertices.push_back({ { -hs,  hs,  hs } , { color } });
     mesh.vertices.push_back({ {  hs,  hs, -hs } , { color } });
     mesh.vertices.push_back({ { -hs,  hs, -hs } , { color } });
@@ -128,7 +122,6 @@ MeshPC MeshBuilder::CreateVertexCubePC(float size, const Color& color)
     mesh.vertices.push_back({ {  hs,  hs, -hs } , { color } });
 
     // Bottom
-
     mesh.vertices.push_back({ { -hs, -hs, -hs } , { color } });
     mesh.vertices.push_back({ {  hs, -hs, -hs } , { color } });
     mesh.vertices.push_back({ { -hs, -hs,  hs } , { color } });
@@ -147,7 +140,6 @@ MeshPC MeshBuilder::CreateCubePC(float size)
     int index = rand() % 100;
 
     // Front
-
     mesh.vertices.push_back({ { -hs, -hs, -hs } , { GetNextColor(index) } });
     mesh.vertices.push_back({ { -hs,  hs, -hs } , { GetNextColor(index) } });
     mesh.vertices.push_back({ {  hs,  hs, -hs } , { GetNextColor(index) } });
@@ -267,6 +259,57 @@ MeshPC MeshBuilder::CreateCylinderPC(int slices, int rings)
     return mesh;
 }
 
+MeshPC MeshBuilder::CreateCylinderPC2(int slices, int rings)
+{
+    MeshPC mesh;
+    int index = rand() % 100;
+
+    const float hh = static_cast<float>(rings) * 0.5f;
+    const float fSlices = static_cast<float>(slices);
+
+    for (int r = 0; r <= rings; ++r)
+    {
+        float rF = static_cast<float>(r);
+
+        for (int s = 0; s <= slices; ++s)
+        {
+            float sF = static_cast<float>(s);
+            float rotation = (sF / fSlices) * Math::Constants::TwoPi;
+
+            mesh.vertices.push_back({ { sin(rotation), rF - hh, -cos(rotation) },GetNextColor(index) });
+        }
+    }
+
+    CreatePlaneIndices(mesh.indices, rings, slices);
+
+    uint32_t bottomTriangleCenterIndice = static_cast<uint32_t>(mesh.vertices.size());
+    uint32_t bottomStartIndice = 0;
+    mesh.vertices.push_back({ { 0.0f, -hh, 0.0f },GetNextColor(index) });
+
+    uint32_t topTriangleCenterIndice = static_cast<uint32_t>(mesh.vertices.size());
+    uint32_t topStartIndice = static_cast<uint32_t>(rings * (slices + 1));
+    mesh.vertices.push_back({ { 0.0f, hh, 0.0f },GetNextColor(index) });
+
+    for (int s = 0; s < slices; ++s)
+    {
+        uint32_t botTrianglePoint1 = bottomStartIndice + s;
+        uint32_t botTrianglePoint2 = bottomStartIndice + s + 1;
+
+        uint32_t topTrianglePoint1 = topStartIndice + s;
+        uint32_t topTrianglePoint2 = topStartIndice + s + 1;
+
+        mesh.indices.push_back(bottomTriangleCenterIndice);
+        mesh.indices.push_back(botTrianglePoint1);
+        mesh.indices.push_back(botTrianglePoint2);
+
+        mesh.indices.push_back(topTriangleCenterIndice);
+        mesh.indices.push_back(topTrianglePoint2); // opposite order to render the correct direction
+        mesh.indices.push_back(topTrianglePoint1);
+    }
+
+    return mesh;
+}
+
 MeshPC MeshBuilder::CreateSpherePC(int slices, int rings, int radius)
 {
     MeshPC mesh;
@@ -285,8 +328,8 @@ MeshPC MeshBuilder::CreateSpherePC(int slices, int rings, int radius)
             float rotation = sF * horzRotation;
 
             mesh.vertices.push_back({ {
-                    radius * sin(rotation) * sin(phi), 
-                    radius * cos(phi), 
+                    radius * sin(rotation) * sin(phi),
+                    radius * cos(phi),
                     radius * cos(rotation) * sin(phi)}, GetNextColor(index) });
         }
     }

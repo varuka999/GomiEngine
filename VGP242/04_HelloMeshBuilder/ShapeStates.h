@@ -11,6 +11,7 @@ public:
 	void Render() override;
 protected:
 	virtual void CreateShapes();
+	virtual void Move(float deltaTime);
 
 	GomiEngine::Graphics::MeshPC mMesh;
 
@@ -20,4 +21,54 @@ protected:
 
 	GomiEngine::Graphics::Camera mCamera;
 	GomiEngine::Graphics::ConstantBuffer mConstantBuffer;
+};
+
+class VertexCubeState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
+};
+class CubeState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
+};
+class BoxState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
+};
+class PyramidState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
+};
+class PlaneState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
+};
+class CylinderState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
+};
+class SphereState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
 };
