@@ -247,3 +247,37 @@ void SphereState::Update(float deltaTime)
         MainApp().ChangeState("CylinderState");
     }
 }
+void SphereXState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreateSpherePX(30, 30, 1);
+}
+void SphereXState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    //if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    //{
+    //    MainApp().ChangeState("VertexCubeState");
+    //}
+    //if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    //{
+    //    MainApp().ChangeState("CylinderState");
+    //}
+}
+void SkySphereXState::CreateShapes()
+{
+    mMesh = MeshBuilder::CreateSkySpherePX(30, 30, 100.0f);
+}
+void SkySphereXState::Update(float deltaTime)
+{
+    Move(deltaTime);
+
+    //if (InputSystem::Get()->IsKeyPressed(KeyCode::UP))
+    //{
+    //    MainApp().ChangeState("VertexCubeState");
+    //}
+    //if (InputSystem::Get()->IsKeyPressed(KeyCode::DOWN))
+    //{
+    //    MainApp().ChangeState("CylinderState");
+    //}
+}

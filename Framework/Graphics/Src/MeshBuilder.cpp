@@ -304,8 +304,7 @@ MeshPC MeshBuilder::CreatePlanePC(int numRows, int numColumns, float spacing, bo
 
 MeshPX MeshBuilder::CreatePlanePX(int numRows, int numColumns, float spacing, bool horizontal)
 {
-    MeshPC mesh;
-    int index = rand() % 100;
+    MeshPX mesh;
     const float hpw = static_cast<float>(numColumns) * spacing * 0.5f;
     const float hph = static_cast<float>(numRows) * spacing * 0.5f;
     const float uInc = 1.0f / static_cast<float>(numColumns);
@@ -321,7 +320,7 @@ MeshPX MeshBuilder::CreatePlanePX(int numRows, int numColumns, float spacing, bo
         for (int c = 0; c <= numColumns; ++c)
         {
             Math::Vector3 pos = (horizontal) ? Math::Vector3{ w, 0.0f, h } : Math::Vector3{ w, h, 0.0f };
-            mesh.vertices.push_back({ pos , {u, v} });
+            mesh.vertices.push_back({ pos, {u, v} });
             w += spacing;
             u += uInc;
         }
@@ -426,6 +425,76 @@ MeshPC MeshBuilder::CreateSpherePC(int slices, int rings, int radius)
                     radius * sin(rotation) * sin(phi),
                     radius * cos(phi),
                     radius * cos(rotation) * sin(phi)}, GetNextColor(index) });
+        }
+    }
+
+    CreatePlaneIndices(mesh.indices, rings, slices);
+
+    return mesh;
+}
+
+MeshPX MeshBuilder::CreateSpherePX(int slices, int rings, int radius)
+{
+    MeshPX mesh;
+    int index = rand() % 100;
+
+    float vertRotation = Math::Constants::Pi / static_cast<float>(rings);
+    float horzRotation = Math::Constants::TwoPi / static_cast<float>(slices);
+
+    float uStep = 1.0f / static_cast<float>(slices);
+    float vStep = 1.0f / static_cast<float>(rings);
+
+    for (int r = 0; r <= rings; ++r)
+    {
+        float rF = static_cast<float>(r);
+        float phi = rF * vertRotation;
+        for (int s = 0; s <= slices; ++s)
+        {
+            float sF = static_cast<float>(s);
+            float rotation = sF * horzRotation;
+
+            float u = uStep * sF;
+            float v = vStep * rF;
+            mesh.vertices.push_back({ {
+                    radius * sin(rotation) * sin(phi),
+                    radius * cos(phi),
+                    radius * cos(rotation) * sin(phi)},
+                    {u, v} });
+        }
+    }
+
+    CreatePlaneIndices(mesh.indices, rings, slices);
+
+    return mesh;
+}
+
+MeshPX MeshBuilder::CreateSkySpherePX(int slices, int rings, int radius)
+{
+    MeshPX mesh;
+    int index = rand() % 100;
+
+    float vertRotation = Math::Constants::Pi / static_cast<float>(rings);
+    float horzRotation = Math::Constants::TwoPi / static_cast<float>(slices);
+
+    float uStep = 1.0f / static_cast<float>(slices);
+    float vStep = 1.0f / static_cast<float>(rings);
+
+    for (int r = 0; r <= rings; ++r)
+    {
+        float rF = static_cast<float>(r);
+        float phi = rF * vertRotation;
+        for (int s = 0; s <= slices; ++s)
+        {
+            float sF = static_cast<float>(s);
+            float rotation = sF * horzRotation;
+
+            float u = uStep * sF;
+            float v = vStep * rF;
+            mesh.vertices.push_back({ {
+                    radius * cos(rotation) * sin(phi),
+                    radius * cos(phi),
+                    radius * sin(rotation) * sin(phi)},
+                    {u, v} });
         }
     }
 

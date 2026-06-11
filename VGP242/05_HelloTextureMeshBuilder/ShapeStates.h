@@ -81,3 +81,17 @@ public:
 protected:
 	void CreateShapes() override;
 };
+class SphereXState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
+};
+class SkySphereXState : public ShapeStates
+{
+public:
+	void Update(float deltaTime);
+protected:
+	void CreateShapes() override;
+};

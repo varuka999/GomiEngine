@@ -21,7 +21,7 @@ namespace GomiEngine::Graphics
 
         // plane
         static MeshPC CreatePlanePC(int numRows, int numColumns, float spacing, bool horizontal = true);
-        static MeshPC CreatePlanePX(int numRows, int numColumns, float spacing, bool horizontal = true);
+        static MeshPX CreatePlanePX(int numRows, int numColumns, float spacing, bool horizontal = true);
 
         // cylinder
         static MeshPC CreateCylinderPC(int slices, int rings);
@@ -29,5 +29,9 @@ namespace GomiEngine::Graphics
 
         // sphere
         static MeshPC CreateSpherePC(int slices, int rings, int radius);
+        static MeshPX CreateSpherePX(int slices, int rings, int radius);
+
+        // sky sphere
+        static MeshPX CreateSkySpherePX(int slices, int rings, int radius);
     };
 }
