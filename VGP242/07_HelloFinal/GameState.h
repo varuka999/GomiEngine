@@ -6,30 +6,36 @@ using namespace GomiEngine;
 using namespace GomiEngine::Graphics;
 using namespace GomiEngine::Math;
 
-
 class Planet
 {
 public:
-    void Initialize(uint32_t planetSize, float rotationSpeed, float orbitRotation, float orbitDistance, std::string texture, Planet* parent = nullptr);
+    void Initialize(const char* name, uint32_t planetSize, float rotationSpeed, float orbitRotationSpeed, float orbitDistance, float startingOrbitAngle = 0.0f, const char* texture, int parentIndex = -1);
     void Terminate();
     void Update(float deltaTime);
     void Render(Camera &mCamera, ConstantBuffer &mConstantBuffer);
 
-    Matrix4 GetMatrixWorld();
+    void SetParentPosition(const Vector3& parentPosition);
+    Vector3 GetPosition() const;
+    float GetOrbitDistance() const;
+    int GetParentIndex() const;
+    const char* GetName() const;
+    float GetPlanetSize() const;
 
 private:
+    std::string mName;
     MeshPX mMesh;
     MeshBuffer mMeshBuffer;
     TextureId mTexture;
     Vector3 mPosition;
-    
-    Planet* mParentPlanet;
+    Vector3 mParentPosition;
+    int mParentIndex;
+
     float mRotation;
     float mRotationSpeed;
     float mOrbitRotation;
     float mOrbitRotationSpeed;
     float mOrbitDistance;
-    Matrix4 mMatWorld;
+    float mPlanetSize = 1.0f;
 };
 
 class GameState : public AppState
@@ -42,38 +48,16 @@ public:
     void DebugUI() override;
 private:
     void PlanetRenders();
+    void DrawOrbitRings();
+    void DrawPlanetMarkers();
+    void UpdateFollowCamera(float deltaTime);
     void UpdateCamera(float deltaTime);
 
+    std::vector<Planet> mPlanets;
+
     MeshPX mSpacePX;
-    MeshPX mSunPX;
-    MeshPX mMercuryPX;
-    MeshPX mVenusPX;
-    MeshPX mEarthPX;
-    MeshPX mMarsPX;
-
-    Vector3 mSunPosition;
-    Vector3 mMercuryPosition;
-    Vector3 mVenusPosition;
-    Vector3 mEarthPosition;
-    Vector3 mMarsPosition;
-
     MeshBuffer mSpaceMeshBuff;
-    MeshBuffer mSunMeshBuff;
-    MeshBuffer mMercuryMeshBuff;
-    MeshBuffer mVenusMeshBuff;
-    MeshBuffer mEarthMeshBuff;
-    MeshBuffer mMarsMeshBuff;
-
     TextureId mSpaceSkyboxTexture;
-    TextureId mSunTexture;
-    TextureId mMercuryTexture;
-    TextureId mVenusTexture;
-    TextureId mEarthTexture;
-    TextureId mMarsTexture;
-
-    Planet mSunPlanet;
-    Planet mEarthPlanet;
-    Planet mEarthPlanet2;
     
     VertexShader mVertexShader;
     PixelShader mPixelShader;

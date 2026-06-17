@@ -10,7 +10,7 @@ namespace GomiEngine
         std::wstring appName = L"AppName";
         uint32_t winWidth = 1640;
         uint32_t winHeight = 1280;
-        uint32_t maxVertexCount = 10000;
+        uint32_t maxVertexCount = 100000;
         bool fullScreen = false;
     };
 

@@ -64,7 +64,7 @@ namespace GomiEngine::Graphics
 		float mWidth = 0.0f;
 		float mHeight = 0.0f;
 
-		float mNearPlane = 0.01f;
-		float mFarPlane = 10000.0f;
+		float mNearPlane = 0.1f;
+		float mFarPlane = 600000.0f;
 	};
 }
