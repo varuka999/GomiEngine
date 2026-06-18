@@ -210,7 +210,7 @@ void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const 
     Vector3 v0 = Vector3::Zero;
     Vector3 v1 = Vector3::Zero;
 
-    const float vertRotation = (Constants::TwoPi / static_cast<float>(rings - 1));
+    const float vertRotation = (Constants::Pi / static_cast<float>(rings - 1));
     const float horzRotation = (Constants::TwoPi / static_cast<float>(slices - 1));
     for (uint32_t r = 0; r < rings; ++r)
     {

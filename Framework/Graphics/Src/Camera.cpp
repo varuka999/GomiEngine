@@ -127,52 +127,6 @@ Math::Matrix4 Camera::GetProjectionMatrix() const
 	return (mProjectionMode == ProjectionMode::Perspective) ? GetPerspectiveMatrix() : GetOrthographicMatrix();
 }
 
-//Math::Matrix4 Camera::GetPerspectiveMatrix() const
-//{
-//	const float a = (mAspectRatio == 0.0f) ? GraphicsSystem::Get()->GetBackBufferAspectRatio() : mAspectRatio;
-//
-//	// compute using double to avoid precision loss when far >> near
-//	const double h_d = 1.0 / tan(static_cast<double>(mFov) * 0.5);
-//	const double w_d = h_d / static_cast<double>(a);
-//
-//	const double zf = static_cast<double>(mFarPlane);
-//	const double zn = static_cast<double>(mNearPlane);
-//
-//	// standard finite D3D-style projection (near -> 0, far -> 1)
-//	const double q = zf / (zf - zn);
-//	const double qn = -zn * q;
-//
-//	return {
-//		static_cast<float>(w_d), 0.0f, 0.0f, 0.0f,
-//		0.0f, static_cast<float>(h_d), 0.0f, 0.0f,
-//		0.0f, 0.0f, static_cast<float>(q), 1.0f,
-//		0.0f, 0.0f, static_cast<float>(qn), 0.0f
-//	};
-//}
-
-//Math::Matrix4 Camera::GetPerspectiveMatrix() const
-//{
-//    const float a = (mAspectRatio == 0.0f) ? GraphicsSystem::Get()->GetBackBufferAspectRatio() : mAspectRatio;
-//
-//    // compute using double to avoid precision loss when far >> near
-//    const double h_d = 1.0 / tan(static_cast<double>(mFov) * 0.5);
-//    const double w_d = h_d / static_cast<double>(a);
-//
-//    const double zf = static_cast<double>(mFarPlane);
-//    const double zn = static_cast<double>(mNearPlane);
-//
-//    // standard finite D3D-style projection (near -> 0, far -> 1)
-//    const double q = zf / (zf - zn);
-//    const double qn = -zn * q;
-//
-//    return {
-//        static_cast<float>(w_d), 0.0f, 0.0f, 0.0f,
-//        0.0f, static_cast<float>(h_d), 0.0f, 0.0f,
-//        0.0f, 0.0f, static_cast<float>(q), 1.0f,
-//        0.0f, 0.0f, static_cast<float>(qn), 0.0f
-//    };
-//}
-
 Math::Matrix4 Camera::GetPerspectiveMatrix() const
 {
 	const float a = (mAspectRatio == 0.0f) ? GraphicsSystem::Get()->GetBackBufferAspectRatio() : mAspectRatio;
