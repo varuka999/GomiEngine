@@ -24,6 +24,7 @@ bool planetMarkers = false;
 bool axisMarkers = true;
 float markerScale = 10.0f;
 float markerLineScale = 20.0f;
+bool toggleSpaceBackground = true;
 
 void GameState::Initialize()
 {
@@ -148,7 +149,10 @@ void GameState::PlanetRenders()
 
     TextureManager::Get()->BindPS(mSpaceSkyboxTexture, 0);
     mConstantBuffer.Update(&wvp);
-    mSpaceMeshBuff.Render();
+    if (toggleSpaceBackground)
+    {
+        mSpaceMeshBuff.Render();
+    }
 
     for (auto& planet : mPlanets)
     {
@@ -255,6 +259,7 @@ void GameState::DebugUI()
 {
     ImGui::Begin("Solar System", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
+    ImGui::Checkbox("Toggle Space Background", &toggleSpaceBackground);
     ImGui::SliderFloat("Move Speed", &gMoveSpeed, 1000.0f, 10000.0f);
     ImGui::SliderFloat("Orbit & Rotation Speed", &globalSpeed, 1.0f, 1000.0f);
     ImGui::Checkbox("Show Orbit Rings", &orbitRings);
@@ -294,15 +299,15 @@ void GameState::UpdateFollowCamera(float deltaTime)
     InputSystem* input = InputSystem::Get();
 
     const float turnSpeed = 2.0f;
-    const float zoomSpeed = 100.0f;
-    const float heightSpeed = 50.0f;
+    const float zoomSpeed = gMoveSpeed / 10;
+    const float heightSpeed = gMoveSpeed / 20;
 
     if (input->IsMouseDown(MouseButton::RBUTTON))
     {
         cameraFollowYaw += input->GetMouseMoveX() * turnSpeed * deltaTime;
         cameraFollowPitch += input->GetMouseMoveY() * turnSpeed * deltaTime;
 
-        cameraFollowPitch = std::clamp(cameraFollowPitch, -1.2f, 1.2f);
+        //cameraFollowPitch = std::clamp(cameraFollowPitch, -1.2f, 1.2f);
     }
 
     if (input->IsKeyDown(KeyCode::W))
@@ -322,8 +327,6 @@ void GameState::UpdateFollowCamera(float deltaTime)
     {
         cameraLockDistanceY -= heightSpeed * deltaTime;
     }
-
-    //cameraLockDistanceZ = std::clamp(cameraLockDistanceZ, cameraLockDistanceZMin, cameraLockDistanceZMax);
 
     float distance = cameraLockDistanceZ;
 
