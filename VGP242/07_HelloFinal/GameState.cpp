@@ -122,7 +122,6 @@ void GameState::Update(float deltaTime)
         UpdateCamera(deltaTime);
     }
 }
-
 void GameState::Render()
 {
     // prepare the GPU
