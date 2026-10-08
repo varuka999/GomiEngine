@@ -1,0 +1,15 @@
+#pragma once
+
+#include "Color.h"
+
+namespace GomiEngine::Graphics
+{
+    struct Material
+    {
+        Color emissive = Colors::Black;     // color where no light i spresent
+        Color ambient = Colors::White;      // color with minimal light
+        Color diffuse = Colors::White;      // base light color
+        Color specular = Colors::White;     // highlight color
+        float shininess = 10.0f;            // intensity of the light
+    };
+}
