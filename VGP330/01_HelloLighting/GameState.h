@@ -4,7 +4,6 @@
 
 using namespace GomiEngine;
 using namespace GomiEngine::Graphics;
-using namespace GomiEngine::Math;
 
 class GameState : public AppState
 {
@@ -18,4 +17,8 @@ private:
     void UpdateCamera(float deltaTime);
 
     Camera mCamera;
+    DirectionalLight mDirectionalLight;
+    StandardEffect mStandardEffect;
+
+    RenderObject mRenderObject;
 };

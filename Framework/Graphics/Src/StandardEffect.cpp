@@ -53,6 +53,8 @@ void StandardEffect::Render(const RenderObject& renderObject)
 
     TransformData data;
     data.wvp = Math::Transpose(matFinal);
+    data.world = Math::Transpose(matWorld);
+    data.viewPosition = mCamera->GetPosition();
     mTransformBuffer.Update(data);
     mLightBuffer.Update(*mDirectionalLight);
     mMaterialBuffer.Update(renderObject.material);

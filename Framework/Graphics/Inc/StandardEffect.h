@@ -33,7 +33,12 @@ namespace GomiEngine::Graphics
         struct TransformData
         {
             Math::Matrix4 wvp;      // world view projection matrix for ndc space
+            Math::Matrix4 world;    // world location
+            Math::Vector3 viewPosition; // position of camera
+            float padding = 0.0f;   // added to keep 16 byte aligned
         };
+
+
 
         using TransformBuffer = TypedConstantBuffer<TransformData>;
         TransformBuffer mTransformBuffer;
