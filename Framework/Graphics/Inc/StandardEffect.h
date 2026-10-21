@@ -38,7 +38,15 @@ namespace GomiEngine::Graphics
             float padding = 0.0f;   // added to keep 16 byte aligned
         };
 
-
+        struct SettingsData
+        {
+            int useDiffuseMap = 1;
+            int useSpecMap = 1;
+            int useNormMap = 1;
+            int useBumpMap = 1;
+            float bumpWeight = 0.1f;
+            float padding[3] = { 0.0f };
+        };
 
         using TransformBuffer = TypedConstantBuffer<TransformData>;
         TransformBuffer mTransformBuffer;
@@ -49,11 +57,15 @@ namespace GomiEngine::Graphics
         using MaterialBuffer = TypedConstantBuffer<Material>;
         MaterialBuffer mMaterialBuffer;
 
+        using SettingsBuffer = TypedConstantBuffer<SettingsData>;
+        SettingsBuffer mSettingsBuffer;
+
         VertexShader mVertexShader;
         PixelShader mPixelShader;
         Sampler mSampler;
 
         const Camera* mCamera = nullptr;
         const DirectionalLight* mDirectionalLight = nullptr;
+        SettingsData mSettingsData;
     };
 }
