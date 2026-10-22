@@ -30,9 +30,16 @@ void GameState::Initialize()
     mStandardEffect.Initialize(shaderPath);
     mStandardEffect.SetCamera(mCamera);
     mStandardEffect.SetDirectionalLight(mDirectionalLight);
+
+    // set up cel effect
+    shaderPath = L"../../Assets/Shaders/CelShader.fx";
+    mStandardEffectCel.Initialize(shaderPath);
+    mStandardEffectCel.SetCamera(mCamera);
+    mStandardEffectCel.SetDirectionalLight(mDirectionalLight);
 }
 void GameState::Terminate()
 {
+    mStandardEffectCel.Terminate();
     mStandardEffect.Terminate();
     mRenderObject.Terminate();
 }
@@ -45,9 +52,18 @@ void GameState::Render()
     SimpleDraw::AddGroundPlane(20.0f, Colors::LightGray);
     SimpleDraw::Render(mCamera);
 
-    mStandardEffect.Begin();
-    mStandardEffect.Render(mRenderObject);
-    mStandardEffect.End();
+       if (mUseCellShading)
+       {
+           mStandardEffectCel.Begin();
+           mStandardEffectCel.Render(mRenderObject);
+           mStandardEffectCel.End();
+       }
+       else
+       {
+           mStandardEffect.Begin();
+           mStandardEffect.Render(mRenderObject);
+           mStandardEffect.End();
+       }
 }
 void GameState::DebugUI()
 {
@@ -69,9 +85,16 @@ void GameState::DebugUI()
         ImGui::ColorEdit4("Diffuse##Material", &mRenderObject.material.diffuse.r);
         ImGui::ColorEdit4("Specular##Material", &mRenderObject.material.specular.r);
         ImGui::DragFloat("Shininess##Material", &mRenderObject.material.shininess, 0.01f, 0.0f, 1000.0f);
-
     }
-    mStandardEffect.DebugUI();
+    ImGui::Checkbox("UseCelShader", &mUseCellShading);
+    if (mUseCellShading)
+    {
+        mStandardEffectCel.DebugUI();
+    }
+    else
+    {
+        mStandardEffect.DebugUI();
+    }
     ImGui::End();
 }
 void GameState::UpdateCamera(float deltaTime)

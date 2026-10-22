@@ -19,6 +19,8 @@ private:
     Camera mCamera;
     DirectionalLight mDirectionalLight;
     StandardEffect mStandardEffect;
+    StandardEffect mStandardEffectCel;
 
     RenderObject mRenderObject;
+    bool mUseCellShading = false;
 };
