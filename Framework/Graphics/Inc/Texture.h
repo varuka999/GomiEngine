@@ -26,7 +26,7 @@ namespace GomiEngine::Graphics
         void BindVS(uint32_t slot) const;
         void BindPS(uint32_t slot) const;
 
-    private:
+    protected:
         ID3D11ShaderResourceView* mShaderResourceView = nullptr;
     };
 }
