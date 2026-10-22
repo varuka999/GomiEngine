@@ -25,6 +25,10 @@ RenderTarget::~RenderTarget()
 {
     ASSERT(mRenderTargetView == nullptr && mDepthStencilView == nullptr, "RenderTarget: must call terminate");
 }
+void RenderTarget::Initialize(const std::filesystem::path& fileName)
+{
+    ASSERT(false, "RenderTarget: do not support this initialize");
+}
 void RenderTarget::Initialize(uint32_t width, uint32_t height, Format format)
 {
     D3D11_TEXTURE2D_DESC desc{};

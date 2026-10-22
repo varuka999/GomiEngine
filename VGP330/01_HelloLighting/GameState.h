@@ -20,6 +20,7 @@ private:
     DirectionalLight mDirectionalLight;
     StandardEffect mStandardEffect;
     StandardEffect mStandardEffectCel;
+    RenderTarget mRenderTarget;
 
     RenderObject mRenderObject;
     bool mUseCellShading = false;

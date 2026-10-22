@@ -36,9 +36,14 @@ void GameState::Initialize()
     mStandardEffectCel.Initialize(shaderPath);
     mStandardEffectCel.SetCamera(mCamera);
     mStandardEffectCel.SetDirectionalLight(mDirectionalLight);
+
+    // initialize render target
+    const uint32_t size = 512;
+    mRenderTarget.Initialize(size, size, RenderTarget::Format::RGBA_U32);
 }
 void GameState::Terminate()
 {
+    mRenderTarget.Terminate();
     mStandardEffectCel.Terminate();
     mStandardEffect.Terminate();
     mRenderObject.Terminate();
@@ -64,8 +69,15 @@ void GameState::Render()
            mStandardEffect.Render(mRenderObject);
            mStandardEffect.End();
        }
+
+       // render target render
+       mRenderTarget.BeginRender(); // tell gpu to render here
+       mStandardEffect.Begin();
+       mStandardEffect.Render(mRenderObject);
+       mStandardEffect.End();
+       mRenderTarget.EndRender();
 }
-void GameState::DebugUI()
+void GameState::DebugUI() // tell gpu to render to window again
 {
     ImGui::Begin("Hello Lighting", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
     if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
@@ -86,6 +98,13 @@ void GameState::DebugUI()
         ImGui::ColorEdit4("Specular##Material", &mRenderObject.material.specular.r);
         ImGui::DragFloat("Shininess##Material", &mRenderObject.material.shininess, 0.01f, 0.0f, 1000.0f);
     }
+    ImGui::Image(
+        mRenderTarget.GetRawData(),
+        { 128, 128 },
+        { 0, 0 },
+        { 1, 1 },
+        { 1, 1, 1, 1 },
+        { 1, 1, 1, 1 });
     ImGui::Checkbox("UseCelShader", &mUseCellShading);
     if (mUseCellShading)
     {

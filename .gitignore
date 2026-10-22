@@ -47,3 +47,5 @@
 **/Debug/
 */Release/
 **/Release/
+
+!External/assimp-5.2.5/**
