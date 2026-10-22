@@ -38,6 +38,30 @@ std::optional<Arguments> ParseArgs(int argc, char* argv[])
     return args;
 }
 
+Vector3 ToVector3(const aiVector3D& v)
+{
+    return{
+        static_cast<float>(v.x),
+        static_cast<float>(v.y),
+        static_cast<float>(v.z)
+    };
+}
+Vector2 ToTexCoord(const aiVector3D& v)
+{
+    return {
+        static_cast<float>(v.x),
+        static_cast<float>(v.y)
+    };
+}
+Color ToColor(const aiColor3D& c)
+{
+    return {
+        static_cast<float>(c.r),
+        static_cast<float>(c.g),
+        static_cast<float>(c.b),
+        1.0f
+    };
+}
 // <scale> <scalevalue> <inputfilename> <outputfilename>
 int main(int argc, char* argv[])
 {
@@ -50,7 +74,7 @@ int main(int argc, char* argv[])
 
     printf("Begin Import\n");
     const Arguments& args = argsOpt.value();
-    
+
     //use assimp
     Assimp::Importer importer;
     // this is for animation, does not save pivot deviations
@@ -64,6 +88,62 @@ int main(int argc, char* argv[])
         return -1;
     }
     printf("Importing %s...\n", args.inputFileName.u8string().c_str());
+
+    Model model;
+    if (scene->HasMeshes())
+    {
+        for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex)
+        {
+            const auto& aiMesh = scene->mMeshes[meshIndex];
+            if (aiMesh->mPrimitiveTypes != aiPrimitiveType_TRIANGLE)
+            {
+                continue;
+            }
+
+            const uint32_t numVertices = aiMesh->mNumVertices;
+            const uint32_t numFaces = aiMesh->mNumFaces;
+            const uint32_t numIndices = numFaces * 3;
+
+            Model::MeshData& meshData = model.meshData.emplace_back();
+
+            printf("Reading Material Index...\n");
+            meshData.materialIndex = aiMesh->mMaterialIndex;
+
+            printf("Reading Vertices...\n");
+            Mesh& mesh = meshData.mesh;
+            mesh.vertices.reserve(numVertices);
+
+            const aiVector3D* positions = aiMesh->mVertices;
+            const aiVector3D* normals = aiMesh->mNormals;
+            const aiVector3D* tangents = (aiMesh->HasTangentsAndBitangents()) ? aiMesh->mTangents : nullptr;
+            const aiVector3D* texCoords = (aiMesh->HasTextureCoords(0)) ? aiMesh->mTextureCoords[0] : nullptr;
+            for (uint32_t v = 0; v < numVertices; ++v)
+            {
+                Vertex& vertex = mesh.vertices.emplace_back();
+                vertex.position = ToVector3(positions[v]) * args.scale;
+                vertex.normal = ToVector3(normals[v]);
+                vertex.tangent = tangents ? ToVector3(tangents[v]) : Vector3::Zero;
+                vertex.uvCoord = texCoords ? ToTexCoord(texCoords[v]) : Vector2::Zero;
+            }
+
+            printf("Reading Indeices...\n");
+            mesh.indices.reserve(numIndices);
+            const auto& aiFaces = aiMesh->mFaces;
+            for (uint32_t f = 0; f < numFaces; ++f)
+            {
+                const auto& aiFace = aiFaces[f];
+                for (uint32_t i = 0; i < 3; ++i)
+                {
+                    mesh.indices.push_back(aiFace.mIndices[i]);
+                }
+            }
+        }
+    }
+
+    // save all of the data
+    printf("Saving Model...\n");
+    ModelIO::SaveModel(args.outputFileName, model);
+    printf("Import Complete\n");
 
     return 0;
 }

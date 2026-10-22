@@ -1,0 +1,1 @@
+-scale 0.01 ../../Assets/Models/Character02/A3_figurine_model.fbx ../../Assets/Models/Character02/A3_figurine_model.model
