@@ -1,0 +1,3 @@
+-scale 0.01 ../../Assets/Models/Character01/XBot.fbx ../../Assets/Models/Character01/XBot.model
+-scale 0.01 ../../Assets/Models/Character02/Mutant.fbx ../../Assets/Models/Character02/Mutant.model
+-scale 0.01 ../../Assets/Models/Character03/Ch34_nonPBR.fbx ../../Assets/Models/Character03/Ch34_nonPBR.model

@@ -23,5 +23,7 @@ private:
     RenderTarget mRenderTarget;
 
     RenderObject mRenderObject;
+    RenderObject mRenderObject2;
+    RenderObject mRenderObject3;
     bool mUseCellShading = false;
 };

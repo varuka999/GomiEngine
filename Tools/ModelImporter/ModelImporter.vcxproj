@@ -138,6 +138,9 @@
       <Project>{05f5ace5-3326-46ec-b568-33e99a579b7c}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Assets\Models\propertiesdebug.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
