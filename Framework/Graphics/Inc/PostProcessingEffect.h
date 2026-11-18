@@ -5,7 +5,7 @@
 #include "VertexShader.h"
 #include "Sampler.h"
 
-namespace BubEngine::Graphics
+namespace GomiEngine::Graphics
 {
     class RenderObject;
     class Texture;

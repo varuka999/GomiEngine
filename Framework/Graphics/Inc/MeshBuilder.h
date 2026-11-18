@@ -35,5 +35,8 @@ namespace GomiEngine::Graphics
 
         // sky sphere
         static MeshPX CreateSkySpherePX(int slices, int rings, int radius);
+
+        // screen quad
+        static MeshPX CreateScreenQuadPX();
     };
 }

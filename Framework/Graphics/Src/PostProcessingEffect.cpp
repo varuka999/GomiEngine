@@ -57,6 +57,48 @@ void PostProcessingEffect::Begin()
 
     PostProcessingData data;
     data.mode = static_cast<int>(mMode);
+    switch (mMode)
+    {
+    case Mode::None:
+    case Mode::Monochrome:
+    case Mode::Invert:
+        break;
+    case Mode::Mirror:
+    {
+        data.param0 = mMirrorScaleX;
+        data.param1 = mMirrorScaleY;
+    }
+    break;
+    case Mode::Blur:
+    case Mode::MotionBlur:
+    {
+        GraphicsSystem* gs = GraphicsSystem::Get();
+        const float screenWidth = gs->GetBackBufferWidth();
+        const float screenHeight = gs->GetBackBufferHeight();
+        data.param0 = mBlurStrength / screenWidth;
+        data.param1 = mBlurStrength / screenHeight;
+    }
+    break;
+    case Mode::Combine2:
+    {
+        data.param0 = mCombine2Alpha;
+    }
+    break;
+    case Mode::ChromaticAberration:
+    {
+        data.param0 = mAberrationValue;
+        data.param1 = mAberrationValue;
+    }
+    break;
+    case Mode::Wave:
+    {
+        data.param0 = mWaveLength;
+        data.param1 = mNumWaves;
+    }
+    break;
+    default:
+        break;
+    }
 
     mPostProcessingBuffer.Update(data);
     mPostProcessingBuffer.BindPS(0);
