@@ -2,6 +2,7 @@
 
 #include "Common.h"
 
+#include "BlendState.h"
 #include "Camera.h"
 #include "Color.h"
 #include "ConstantBuffer.h"

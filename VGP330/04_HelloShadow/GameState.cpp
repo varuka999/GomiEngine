@@ -32,6 +32,8 @@ void GameState::Initialize()
 	mStandardEffect.Initialize(shaderPath);
 	mStandardEffect.SetCamera(mCamera);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);
+    mStandardEffect.SetShadowMap(mShadowEffect.GetDepthMap());
+    mStandardEffect.SetLightCamera(mShadowEffect.GetLightCamera());
 
 	// set up shadow effect
     mShadowEffect.Initialize();

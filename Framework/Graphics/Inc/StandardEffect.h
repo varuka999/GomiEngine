@@ -13,6 +13,7 @@ namespace GomiEngine::Graphics
     class Camera;
     class RenderObject;
     class RenderGroup;
+    class Texture;
 
     class StandardEffect final
     {
@@ -30,12 +31,15 @@ namespace GomiEngine::Graphics
 
         void SetCamera(const Camera& camera);
         void SetDirectionalLight(const DirectionalLight& directionaLight);
+        void SetShadowMap(const Texture& shadowMap);
+        void SetLightCamera(const Camera& lightCamera);
 
     private:
         struct TransformData
         {
             Math::Matrix4 wvp;      // world view projection matrix for ndc space
             Math::Matrix4 world;    // world location
+            Math::Matrix4 lwvp;     // light view projection matrix from the light perspective (for shadow mapping)
             Math::Vector3 viewPosition; // position of camera
             float padding = 0.0f;   // added to keep 16 byte aligned
         };
@@ -46,9 +50,10 @@ namespace GomiEngine::Graphics
             int useSpecMap = 1;
             int useNormMap = 1;
             int useBumpMap = 1;
+            int useShadowMap = 1;
             float bumpWeight = 0.1f;
             float depthBias = 0.00003f;
-            float padding[3] = { 0.0f };
+            float padding = 0.0f;
         };
 
         using TransformBuffer = TypedConstantBuffer<TransformData>;
@@ -69,6 +74,8 @@ namespace GomiEngine::Graphics
 
         const Camera* mCamera = nullptr;
         const DirectionalLight* mDirectionalLight = nullptr;
+        const Texture* mShadowMap = nullptr;
+        const Camera* mLightCamera = nullptr;
         SettingsData mSettingsData;
     };
 }

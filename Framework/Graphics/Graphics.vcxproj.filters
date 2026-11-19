@@ -93,6 +93,9 @@
     <ClInclude Include="Inc\ShadowEffect.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\BlendState.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -137,9 +140,6 @@
     <ClCompile Include="Src\RenderObject.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Src\StandardEffect.cpp">
-      <Filter>Inc</Filter>
-    </ClCompile>
     <ClCompile Include="Src\RenderTarget.cpp">
       <Filter>Src</Filter>
     </ClCompile>
@@ -150,6 +150,12 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\ShadowEffect.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StandardEffect.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\BlendState.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
