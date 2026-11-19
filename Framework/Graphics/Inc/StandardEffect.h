@@ -47,6 +47,7 @@ namespace GomiEngine::Graphics
             int useNormMap = 1;
             int useBumpMap = 1;
             float bumpWeight = 0.1f;
+            float depthBias = 0.00003f;
             float padding[3] = { 0.0f };
         };
 

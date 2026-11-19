@@ -22,6 +22,7 @@
 #include "Sampler.h"
 #include "SimpleDraw.h"
 #include "StandardEffect.h"
+#include "ShadowEffect.h"
 #include "Texture.h"
 #include "TextureManager.h"
 #include "Transform.h"
